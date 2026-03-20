@@ -41,10 +41,10 @@ create policy "Users can view their own subscriptions." on subscriptions
   for select using (auth.uid() = user_id);
 
 create policy "Service role can insert subscriptions." on subscriptions
-  for insert with check (true);
+  for insert to service_role with check (true);
 
 create policy "Service role can update subscriptions." on subscriptions
-  for update using (true);
+  for update to service_role using (true);
 
 -- Create a table for reviews
 create table reviews (
@@ -72,7 +72,7 @@ create policy "Users can view their own reviews." on reviews
   for select using (auth.uid() = user_id);
 
 create policy "Service role can insert reviews." on reviews
-  for insert with check (true);
+  for insert to service_role with check (true);
 
 create policy "Service role can update reviews." on reviews
-  for update using (true);
+  for update to service_role using (true);
