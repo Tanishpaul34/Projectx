@@ -1,4 +1,5 @@
 // Mock Fetcher for Google Business Profile Reviews
+// TODO: Replace with real Google Business Profile API integration
 const fetchNewReviews = async () => {
   console.log("Mocking GBP review fetch...");
   // Simulate network delay
@@ -26,6 +27,7 @@ const fetchNewReviews = async () => {
 };
 
 // Mock poster for Google Business Profile Reply
+// TODO: Replace with real Google Business Profile API integration
 const postReplyToReview = async (googleReviewId, replyText) => {
   console.log(`Mocking posting reply to GBP for review ${googleReviewId}...`);
   // Simulate network delay
