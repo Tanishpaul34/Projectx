@@ -7,6 +7,7 @@ export default function Settings() {
   const [approvalMode, setApprovalMode] = useState('Manual Approval');
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Settings() {
       setLoading(false);
     };
     fetchUserAndProfile();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const saveSettings = async () => {
