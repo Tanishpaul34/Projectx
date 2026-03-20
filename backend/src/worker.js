@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const { fetchNewReviews, postReplyToReview } = require('./services/gbpService');
 const { analyzeReviewAndDraftResponse } = require('./services/aiService');
 const { createClient } = require('@supabase/supabase-js');
