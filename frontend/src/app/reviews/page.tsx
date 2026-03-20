@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
 export default function Reviews() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -30,6 +32,7 @@ export default function Reviews() {
       setLoading(false);
     };
     fetchUserAndReviews();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSendResponse = async (reviewId: string, replyText: string) => {
@@ -102,7 +105,7 @@ export default function Reviews() {
                 </div>
 
                 <p className="text-gray-300 italic bg-[#0a0a0a] p-4 border-l-4 border-[var(--color-neon-yellow)] mt-4">
-                  "{review.review_text}"
+                  &quot;{review.review_text}&quot;
                 </p>
 
                 {review.key_topics && review.key_topics.length > 0 && (
