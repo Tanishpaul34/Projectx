@@ -1,12 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 export default function Reviews() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUserAndReviews = async () => {
@@ -102,7 +104,7 @@ export default function Reviews() {
                 </div>
 
                 <p className="text-gray-300 italic bg-[#0a0a0a] p-4 border-l-4 border-[var(--color-neon-yellow)] mt-4">
-                  "{review.review_text}"
+                  &quot;{review.review_text}&quot;
                 </p>
 
                 {review.key_topics && review.key_topics.length > 0 && (

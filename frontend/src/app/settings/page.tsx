@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 export default function Settings() {
   const [brandVoice, setBrandVoice] = useState('Professional');
   const [approvalMode, setApprovalMode] = useState('Manual Approval');
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUserAndProfile = async () => {
