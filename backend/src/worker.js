@@ -28,15 +28,29 @@ const processReviews = async () => {
       console.log(`Processing reviews for user: ${profile.id}`);
       const newReviews = await fetchNewReviews();
 
-      for (const review of newReviews) {
-        // Check if review already exists
-        const { data: existingReview, error: existingError } = await supabase
-          .from('reviews')
-          .select('id')
-          .eq('google_review_id', review.google_review_id)
-          .single();
+      if (!newReviews || newReviews.length === 0) {
+        continue;
+      }
 
-        if (existingReview) {
+      // Bulk fetch existing reviews to avoid N+1 query issue
+      const reviewIds = newReviews.map(r => r.google_review_id);
+
+      const { data: existingReviews, error: existingError } = await supabase
+        .from('reviews')
+        .select('google_review_id')
+        .in('google_review_id', reviewIds);
+
+      if (existingError) {
+        console.error('Error fetching existing reviews:', existingError);
+        continue; // Skip processing this profile's reviews on error
+      }
+
+      // Use a Set for O(1) membership checks
+      const existingReviewIds = new Set(existingReviews?.map(r => r.google_review_id) || []);
+
+      for (const review of newReviews) {
+        // Check if review already exists using the Set
+        if (existingReviewIds.has(review.google_review_id)) {
           console.log(`Review ${review.google_review_id} already exists. Skipping.`);
           continue;
         }
