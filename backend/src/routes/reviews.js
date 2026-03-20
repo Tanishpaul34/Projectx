@@ -8,7 +8,7 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'anon_key';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Fetch reviews for a specific user
-router.get('/:userId', async (req, res) => {
+router.get(['/', '/:userId'], async (req, res) => {
   try {
     const { userId } = req.params;
 
