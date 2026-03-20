@@ -1,6 +1,7 @@
 const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
 const { postReplyToReview } = require('../services/gbpService');
+const { authenticateUser } = require('../middleware/auth');
 
 const router = express.Router();
 const supabaseUrl = process.env.SUPABASE_URL || 'https://example.supabase.co';
@@ -8,12 +9,17 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'anon_key';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Fetch reviews for a specific user
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', authenticateUser, async (req, res) => {
   try {
     const { userId } = req.params;
 
     if (!userId) {
       return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    // Ensure the authenticated user can only access their own reviews
+    if (req.user.id !== userId) {
+      return res.status(403).json({ error: 'Forbidden: You can only access your own reviews' });
     }
 
     const { data: reviews, error } = await supabase
