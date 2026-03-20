@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const { fetchNewReviews, postReplyToReview } = require('./services/gbpService');
 const { analyzeReviewAndDraftResponse } = require('./services/aiService');
 const { createClient } = require('@supabase/supabase-js');
@@ -87,8 +86,6 @@ const processReviews = async () => {
   }
 };
 
-// Run the job every 30 minutes
-// cron.schedule('*/30 * * * *', processReviews);
 
 module.exports = {
   processReviews
