@@ -1,12 +1,25 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import type { User } from '@supabase/supabase-js';
+
+interface Review {
+  id: string;
+  reviewer_name: string;
+  rating: number;
+  created_at: string;
+  sentiment?: string;
+  review_text: string;
+  key_topics?: string[];
+  status: string;
+  ai_suggested_response?: string;
+}
 
 export default function Reviews() {
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  const [user, setUser] = useState<any>(null);
+  const [, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUserAndReviews = async () => {
@@ -102,7 +115,7 @@ export default function Reviews() {
                 </div>
 
                 <p className="text-gray-300 italic bg-[#0a0a0a] p-4 border-l-4 border-[var(--color-neon-yellow)] mt-4">
-                  "{review.review_text}"
+                  &quot;{review.review_text}&quot;
                 </p>
 
                 {review.key_topics && review.key_topics.length > 0 && (
